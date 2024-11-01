@@ -1,0 +1,22 @@
+<div class="task-edit-container">
+    <h2>Edit Task</h2>
+    <form (ngSubmit)="saveTask()">
+      <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" [(ngModel)]="task.title" name="title" required>
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="task.description" name="description" required></textarea>
+      </div>
+      <div>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" [(ngModel)]="task.dueDate" name="dueDate" required>
+      </div>
+      <div>
+        <label for="assignedTo">Assigned To:</label>
+        <input type="text" id="assignedTo" [(ngModel)]="task.assignedTo" name="assignedTo" required>
+      </div>
+      <button type="submit">Save</button>
+    </form>
+  </div>
