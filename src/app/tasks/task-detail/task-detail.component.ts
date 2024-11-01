@@ -13,7 +13,11 @@ export class TaskDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private taskService: TaskService, private router: Router) { }
 
   ngOnInit(): void {
-    const taskId = this.route.snapshot.paramMap.get('id');
+    const taskId = Number(this.route.snapshot.paramMap.get('id'));
+    if (isNaN(taskId)) {
+      this.router.navigate(['/not-found']);
+      return;
+    }
     this.taskService.getTask(taskId).subscribe(task => {
       this.task = task;
     });

@@ -5,6 +5,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { TaskListComponent } from './tasks/task-list/task-list.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
 import { TaskEditComponent } from './tasks/task-edit/task-edit.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
@@ -14,6 +15,8 @@ const routes: Routes = [
   { path: 'tasks', component: TaskListComponent },
   { path: 'tasks/:id', component: TaskDetailComponent, canActivate: [AuthGuard] },
   { path: 'tasks/:id/edit', component: TaskEditComponent, canActivate: [AuthGuard] },
+  { path: 'not-found', component: NotFoundComponent},
+  { path: '**', redirectTo: '/not-found' }
 ];
 
 @NgModule({
