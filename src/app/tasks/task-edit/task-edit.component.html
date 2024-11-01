@@ -1,23 +1,34 @@
-<div class="task-edit-container">
-    <h2>Edit Task</h2>
-    <form (ngSubmit)="saveTask()">
-      <div class="form-group">
-        <label for="title">Title:</label>
-        <input type="text" id="title" [(ngModel)]="task.title" name="title" class="form-control" required>
+<!-- src/app/tasks/task-edit/task-edit.component.html -->
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2>Edit Task</h2>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="saveTask()">
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input type="text" id="title" [(ngModel)]="task.title" name="title" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea id="description" [(ngModel)]="task.description" name="description" class="form-control" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="dueDate">Due Date:</label>
+              <input type="date" id="dueDate" [(ngModel)]="task.dueDate" name="dueDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="assignedTo">Assigned To:</label>
+              <input type="text" id="assignedTo" [(ngModel)]="task.assignedTo" name="assignedTo" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cancel()">Cancel</button>
+          </form>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" [(ngModel)]="task.description" name="description" class="form-control" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="dueDate">Due Date:</label>
-        <input type="date" id="dueDate" [(ngModel)]="task.dueDate" name="dueDate" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="assignedTo">Assigned To:</label>
-        <input type="text" id="assignedTo" [(ngModel)]="task.assignedTo" name="assignedTo" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
-    </form>
+    </div>
   </div>
+</div>

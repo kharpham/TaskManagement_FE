@@ -1,13 +1,26 @@
-<div class="task-detail-container">
-    <h2>Task Detail</h2>
-    <div *ngIf="task">
-      <h3>{{ task.title }}</h3>
-      <p>{{ task.description }}</p>
-      <p>Due Date: {{ task.dueDate | date }}</p>
-      <p>Assigned To: {{ task.assignedTo }}</p>
-      <p>Status: {{ task.isComplete ? 'Completed' : 'Incomplete' }}</p>
-      <button (click)="toggleStatus()">{{ task.isComplete ? 'Mark as Incomplete' : 'Mark as Complete' }}</button>
-      <button (click)="deleteTask()">Delete</button>
-      <button routerLink="/tasks/{{ task.id }}/edit">Edit</button>
+<!-- src/app/tasks/task-detail/task-detail.component.html -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2>Task Detail</h2>
+          </div>
+          <div class="card-body" *ngIf="task">
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.description }}</p>
+            <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+            <p><strong>Assigned To:</strong> {{ task.assignedTo }}</p>
+            <p><strong>Status:</strong> {{ task.isComplete ? 'Completed' : 'Incomplete' }}</p>
+            <div class="btn-group mt-3" role="group">
+              <button type="button" class="btn btn-outline-primary" (click)="toggleStatus()">
+                {{ task.isComplete ? 'Mark as Incomplete' : 'Mark as Complete' }}
+              </button>
+              <button type="button" class="btn btn-danger" (click)="deleteTask()">Delete</button>
+              <button type="button" class="btn btn-secondary" [routerLink]="['/tasks', task.id, 'edit']">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
