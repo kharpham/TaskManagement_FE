@@ -2,11 +2,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskService } from '../../shared/services/task.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-task-create',
   templateUrl: './task-create.component.html',
-  styleUrls: ['./task-create.component.css']
+  styleUrls: ['./task-create.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class TaskCreateComponent {
   task: any = { title: '', description: '', dueDate: '', assignedTo: '' };

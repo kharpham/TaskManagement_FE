@@ -2,11 +2,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../shared/services/task.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-task-edit',
   templateUrl: './task-edit.component.html',
-  styleUrls: ['./task-edit.component.css']
+  styleUrls: ['./task-edit.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class TaskEditComponent implements OnInit {
   task: any = { title: '', description: '', dueDate: '', assignedTo: '' };
@@ -19,25 +24,24 @@ export class TaskEditComponent implements OnInit {
       this.router.navigate(['/not-found']);
       return;
     }
-    if (taskId) {
-      this.taskService.getTask(taskId).subscribe(task => {
-        this.task = task;
-      });
-    } 
+    this.taskService.getTask(taskId).subscribe(task => {
+      this.task = task;
+    }, error => {
+      console.error('Error fetching task:', error);
+      this.router.navigate(['/not-found']);
+    });
   }
 
   saveTask(): void {
-    if (this.task.id) {
-      this.taskService.updateTask(this.task.id, this.task).subscribe(() => {
-        this.router.navigate(['/tasks']);
-      }, error => {
-        console.error('Error updating task:', error);
-        this.router.navigate(['/not-found']);
-      });
-    } else {
-      this.taskService.createTask(this.task).subscribe(() => {
-        this.router.navigate(['/tasks']);
-      });
-    }
+    this.taskService.updateTask(this.task.id, this.task).subscribe(() => {
+      this.router.navigate(['/tasks']);
+    }, error => {
+      console.error('Error updating task:', error);
+      this.router.navigate(['/not-found']);
+    });
+  }
+
+  cancel(): void {
+    this.router.navigate(['/tasks']);
   }
 }

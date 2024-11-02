@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { routes } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -11,6 +11,7 @@ import { TaskListComponent } from './tasks/task-list/task-list.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
 import { TaskEditComponent } from './tasks/task-edit/task-edit.component';
 import { AuthGuard } from './core/auth.guard';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { AuthGuard } from './core/auth.guard';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    RouterModule.forRoot(routes),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
