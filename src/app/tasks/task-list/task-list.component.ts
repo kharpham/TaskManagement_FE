@@ -1,6 +1,7 @@
 // src/app/tasks/task-list/task-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../shared/services/task.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -13,8 +14,8 @@ import { RouterModule } from '@angular/router';
 })
 export class TaskListComponent implements OnInit {
   tasks: any[] = [];
-
-  constructor(private taskService: TaskService) { }
+  username: string | null = null;
+  constructor(private taskService: TaskService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadTasks();
@@ -35,4 +36,5 @@ export class TaskListComponent implements OnInit {
       this.loadTasks();
     });
   }
+  
 }
