@@ -17,8 +17,7 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
-        console.log('AuthService: Login successful, setting JWT token in cookies');
-        this.cookieService.set('jwt', response.token, 7, '/', '', true, 'Strict'); // Manually set the token in cookies
+        // this.cookieService.set('jwt', response.token, 7, '/', '', true, 'Strict'); // Manually set the token in cookies
         this.loggedIn = true;
         return response;
       })
@@ -30,7 +29,6 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    this.cookieService.delete('jwt'); // Remove the token from cookies
     return this.http.post(`${this.apiUrl}/logout`, {}).pipe(
       map(response => {
         console.log('AuthService: Logout successful, setting loggedIn to false');
@@ -45,11 +43,9 @@ export class AuthService {
     console.log('AuthService: Checking if JWT token exists in cookies:', token);
     if (token) {
       this.loggedIn = true;
-      console.log('AuthService: JWT token exists, setting loggedIn to true');
       return true;
     } else {
       this.loggedIn = false;
-      console.log('AuthService: JWT token does not exist, setting loggedIn to false');
       return false;
     }
   }

@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'https://localhost:7090/api/tasks'; // Update this URL as needed
+  private apiUrl = 'https://localhost:7090/api/task'; // Update this URL as needed
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getTasks(isComplete?: boolean): Observable<any[]> {
+    const token = this.cookieService.get('jwt');
     let url = this.apiUrl;
     if (isComplete !== undefined) {
       url += `?isComplete=${isComplete}`;
     }
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(url, {
+      headers: new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    });
   }
-
   getTask(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }

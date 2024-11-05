@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../shared/services/task.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
 export class TaskListComponent implements OnInit {
   tasks: any[] = [];
   username: string | null = null;
-  constructor(private taskService: TaskService, private authService: AuthService) { }
+  constructor(private taskService: TaskService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadTasks();
@@ -34,6 +34,11 @@ export class TaskListComponent implements OnInit {
   deleteTask(taskId: number): void {
     this.taskService.deleteTask(taskId).subscribe(() => {
       this.loadTasks();
+    });
+  }
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/login']);
     });
   }
   
