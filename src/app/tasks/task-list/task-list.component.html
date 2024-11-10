@@ -10,15 +10,19 @@
             <strong>Welcome, {{ username }}!</strong>
           </div>
           <div class="btn-group" role="group" aria-label="Filter tasks">
-            <button type="button" class="btn btn-outline-primary" (click)="filterTasks(null)">All</button>
-            <button type="button" class="btn btn-outline-primary" (click)="filterTasks(true)">Completed</button>
-            <button type="button" class="btn btn-outline-primary" (click)="filterTasks(false)">Incompleted</button>
+            <button type="button" class="btn" [ngClass]="{'btn-primary': activeFilter === 'all', 'btn-outline-primary': activeFilter !== 'all'}" (click)="filterTasks(null)">All</button>
+            <button type="button" class="btn" [ngClass]="{'btn-primary': activeFilter === 'completed', 'btn-outline-primary': activeFilter !== 'completed'}" (click)="filterTasks(true)">Completed</button>
+            <button type="button" class="btn" [ngClass]="{'btn-primary': activeFilter === 'incompleted', 'btn-outline-primary': activeFilter !== 'incompleted'}" (click)="filterTasks(false)">Incompleted</button>
           </div>
         </div>
         <div class="card-body">
           <ul class="list-group">
             <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
-              <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
+              <div>
+                <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
+                <span *ngIf="task.isComplete" class="badge bg-success ms-2">Completed</span>
+                <span *ngIf="!task.isComplete" class="badge bg-danger ms-2">Incomplete</span>
+              </div>
               <button type="button" class="btn btn-danger btn-sm" (click)="deleteTask(task.id)">Delete</button>
             </li>
           </ul>

@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 })
 export class RegisterComponent {
   user = { username: '', email: '', password: '' };
+  errorMessage: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -23,6 +24,7 @@ export class RegisterComponent {
       this.router.navigate(['/tasks']);
     }, error => {
       console.error('Registration failed', error);
+      this.errorMessage = error.error.message || 'Registration failed';
     });
   }
 }

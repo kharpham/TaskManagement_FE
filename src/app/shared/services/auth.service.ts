@@ -1,9 +1,7 @@
 // src/app/shared/services/auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +10,11 @@ export class AuthService {
   private apiUrl = 'https://localhost:7090/api/user';
   private loggedIn = false;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient) { }
 
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+    return this.http.post(`${this.apiUrl}/login`, credentials, { withCredentials: true }).pipe(
       map((response: any) => {
-        // this.cookieService.set('jwt', response.token, 7, '/', '', true, 'Strict'); // Manually set the token in cookies
         this.loggedIn = true;
         return response;
       })
@@ -25,13 +22,12 @@ export class AuthService {
   }
 
   register(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+    return this.http.post(`${this.apiUrl}/register`, user, { withCredentials: true });
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/logout`, {}).pipe(
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
       map(response => {
-        console.log('AuthService: Logout successful, setting loggedIn to false');
         this.loggedIn = false;
         return response;
       })
@@ -39,8 +35,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const token = this.cookieService.get('jwt');
-    console.log('AuthService: Checking if JWT token exists in cookies:', token);
+    const token = document.cookie.split('; ').find(row => row.startsWith('jwt='));
     if (token) {
       this.loggedIn = true;
       return true;
@@ -51,9 +46,6 @@ export class AuthService {
   }
 
   getUserInfo(): Observable<any> {
-    const token = this.cookieService.get('jwt');
-    return this.http.get(`${this.apiUrl}/userinfo`, {
-      headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
-    });
+    return this.http.get(`${this.apiUrl}/userinfo`, { withCredentials: true });
   }
 }

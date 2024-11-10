@@ -15,10 +15,13 @@ import { Router, RouterModule } from '@angular/router';
 export class TaskListComponent implements OnInit {
   tasks: any[] = [];
   username: string | null = null;
+  activeFilter: string = 'all';
+
   constructor(private taskService: TaskService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadTasks();
+    this.loadUserInfo();
   }
 
   loadTasks(isComplete?: boolean): void {
@@ -28,6 +31,7 @@ export class TaskListComponent implements OnInit {
   }
 
   filterTasks(isComplete: boolean | null): void {
+    this.activeFilter = isComplete === null ? 'all' : isComplete ? 'completed' : 'incompleted';
     this.loadTasks(isComplete === null ? undefined : isComplete);
   }
 
@@ -36,10 +40,16 @@ export class TaskListComponent implements OnInit {
       this.loadTasks();
     });
   }
+
+  loadUserInfo(): void {
+    this.authService.getUserInfo().subscribe(userInfo => {
+      this.username = userInfo.username;
+    });
+  }
+
   logout(): void {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);
     });
   }
-  
 }
