@@ -36,6 +36,7 @@ export class TaskDetailComponent implements OnInit {
     this.taskService.updateTaskStatus(this.task.id, { isComplete: updatedStatus }).subscribe(task => {
       this.task.isComplete = updatedStatus;
     });
+    this.router.navigate(['/tasks']);
   }
 
   deleteTask(): void {
