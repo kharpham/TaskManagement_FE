@@ -1,34 +1,36 @@
 <!-- src/app/tasks/task-create/task-create.component.html -->
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <h2>Create Task</h2>
-          </div>
-          <div class="card-body">
-            <form (ngSubmit)="createTask()">
-              <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" id="title" [(ngModel)]="task.title" name="title" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" [(ngModel)]="task.description" name="description" class="form-control" rows="5" required></textarea>
-              </div>
-              <div class="form-group">
-                <label for="dueDate">Due Date:</label>
-                <input type="date" id="dueDate" [(ngModel)]="task.dueDate" name="dueDate" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="assignedTo">Assigned To:</label>
-                <input type="text" id="assignedTo" [(ngModel)]="task.assignedTo" name="assignedTo" class="form-control" required>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">Create</button>
-              <button type="button" class="btn btn-secondary btn-block" (click)="cancel()">Cancel</button>
-            </form>
-          </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2>Create Task</h2>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input id="title" formControlName="title" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" formControlName="description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="dueDate">Due Date</label>
+              <input id="dueDate" type="date" formControlName="dueDate" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="assignedTo">Assigned To</label>
+              <select id="assignedTo" formControlName="assignedTo" class="form-control">
+                <option *ngFor="let username of usernames" [value]="username">{{ username }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">Create Task</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cancel()">Cancel</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>

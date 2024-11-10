@@ -48,4 +48,7 @@ export class AuthService {
   getUserInfo(): Observable<any> {
     return this.http.get(`${this.apiUrl}/userinfo`, { withCredentials: true });
   }
+  getAllUsernames(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/usernames`, { withCredentials: true });
+  }
 }

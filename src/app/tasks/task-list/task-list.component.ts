@@ -44,6 +44,8 @@ export class TaskListComponent implements OnInit {
   loadUserInfo(): void {
     this.authService.getUserInfo().subscribe(userInfo => {
       this.username = userInfo.username;
+    }, error => {
+      console.log("Error fetching user info:", error);
     });
   }
 
